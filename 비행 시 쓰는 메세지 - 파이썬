@@ -1,0 +1,20 @@
+* [Report.msg](srv/Report.msg) - Report the drone status   #드론 상태 보고
+* [Mission.msg](srv/Mission.msg) - Mission, multiple tasks   #미션, 임무 수행
+* [Task.msg](srv/Task.msg) - Task to do by the UAV   #UAV에서 수행할 작업
+* [Battery.msg](srv/Battery.msg) - Battery status   #배터리 상태
+* [RPYPose.msg](srv/RPYPose.msg) - Roll Pitch Yaw Position    #롤 피치 요 포지션
+* [Distance.msg](srv/Distance.msg) - Raw laser messages   #원시 레이저 메세지
+* [RPY.msg](srv/RPY.msg) - Roll Pitch Yaw   #롤 피치 요
+* [PositionWithCovariance.msg](srv/PositionWithCovariance.msg) - Position with covariance (like PoseWithCovariance, without orientation)   #공변성 위치 
+
+* [Report.msg](msg/Report.msg) - Report the drone status
+* [Mission.msg](msg/Mission.msg) - Mission, multiple tasks
+* [Task.msg](msg/Task.msg) - Task to do by the UAV
+* [Battery.msg](msg/Battery.msg) - Battery status
+* [RPYPose.msg](msg/RPYPose.msg) - Roll Pitch Yaw Position 
+* [Distance.msg](msg/Distance.msg) - Raw laser messages (deprecated, replaced by MultiEcho)
+* [MultiEcho.msg](msg/MultiEcho.msg) - Laser measures and strength
+* [RPY.msg](msg/RPY.msg) - Roll Pitch Yaw
+* [PositionWithCovariance.msg](msg/PositionWithCovariance.msg) - Position with covariance (like PoseWithCovariance, without orientation)
+* [PositionWithCovarianceStamped.msg](srv/PositionWithCovarianceStamped.msg) - Position with covariance and stamp (like PoseWithCovarianceStamped, without orientation)
+     #공변성 및 스탬프가 있는 위치 
