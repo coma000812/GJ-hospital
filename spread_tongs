@@ -4,3 +4,71 @@
 
 while()
    if()
+   
+   # Go to Waypoint
+        elif actionCode == 4:
+            rospy.loginfo("inside state 4...")
+            returnTargetInDrone(targetInMap)
+            gain = 0.3
+            xAct = (targetInDrone.position.x * gain)
+            yAct = (targetInDrone.position.y * gain)
+            zAct = (targetInDrone.position.z * gain)
+            rospy.loginfo("going to %s %s %s %s %s %s" % (xAct, yAct, zAct, 0, 0, 0))
+            command(xAct, yAct, zAct, 0, 0, 0)
+
+        # Look at waypoint
+        elif actionCode == 5:
+            rospy.loginfo("inside state 5...")
+            returnTargetInDrone(targetInMap)
+            gain = 0.5  # Proportional goal
+            zRotAct = targetInDrone.orientation.z * gain
+            command(0, 0, 0, 0, 0, zRotAct)
+
+        # Get Waypoint
+        elif actionCode == 6:
+            rospy.loginfo("inside state 6...")
+            returnTargetInDrone(targetInMap)
+            rospy.loginfo("" + str(targetInMap))
+
+        # Look and Go to waypoint
+        elif actionCode == 7:
+            returnTargetInDrone(targetInMap)
+            if not wayPointReached(waypointAccuracy):
+                if (wayPointFaced(angleAccuracy)):
+                    zRotAct = (targetInDrone.orientation.z * angleGain)
+                    xAct = (targetInDrone.position.x * pointGain)
+                    yAct = (targetInDrone.position.y * pointGain)
+                    zAct = (targetInDrone.position.z * pointGain)
+                    rospy.loginfo("Real Pose X: " + str(realPose.pose.position.x) +
+                                  " Y: " + str(realPose.pose.position.y) +
+                                  " Z: " + str(realPose.pose.position.z))
+                    rospy.loginfo("Acceleration X: " + str(xAct) +
+                                  " Y: " + str(yAct) +
+                                  " Z: " + str(zAct))
+
+                    rospy.loginfo("Current DD X: " + str(currentDroneData.x) +
+                                  " Y: " + str(currentDroneData.y) +
+                                  " Z: " + str(currentDroneData.z))
+
+                    rospy.loginfo("Target DD X: " + str(targetInDrone.position.x) +
+                                  " Y: " + str(targetInDrone.position.y) +
+                                  " Z: " + str(targetInDrone.position.z))
+
+                    command(xAct, yAct, zAct, 0, 0, zRotAct)
+                else:
+                    rospy.loginfo("fixing orientation")
+                    zRotAct = targetInDrone.orientation.z *  angleGain
+                    command(0, 0, 0, 0, 0, zRotAct)
+            else:
+                rospy.loginfo("Waypoint Reached ")
+                command(0, 0, 0, 0, 0, 0)
+                actionCode = 0
+                
+                
+                
+                
+        # spread tongs
+        elif actionCode == 8:
+        
+        
+        
