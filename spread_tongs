@@ -6,8 +6,8 @@ while()
    if()
    
    # Go to Waypoint
-        elif actionCode == 4:
-            rospy.loginfo("inside state 4...")
+        elif actionCode == 1:
+            rospy.loginfo("inside state 1...")
             returnTargetInDrone(targetInMap)
             gain = 0.3
             xAct = (targetInDrone.position.x * gain)
@@ -17,21 +17,21 @@ while()
             command(xAct, yAct, zAct, 0, 0, 0)
 
         # Look at waypoint
-        elif actionCode == 5:
-            rospy.loginfo("inside state 5...")
+        elif actionCode == 2:
+            rospy.loginfo("inside state 2...")
             returnTargetInDrone(targetInMap)
             gain = 0.5  # Proportional goal
             zRotAct = targetInDrone.orientation.z * gain
             command(0, 0, 0, 0, 0, zRotAct)
 
         # Get Waypoint
-        elif actionCode == 6:
-            rospy.loginfo("inside state 6...")
+        elif actionCode == 3:
+            rospy.loginfo("inside state 3...")
             returnTargetInDrone(targetInMap)
             rospy.loginfo("" + str(targetInMap))
 
         # Look and Go to waypoint
-        elif actionCode == 7:
+        elif actionCode == 4:
             returnTargetInDrone(targetInMap)
             if not wayPointReached(waypointAccuracy):
                 if (wayPointFaced(angleAccuracy)):
@@ -68,7 +68,32 @@ while()
                 
                 
         # spread tongs
-        elif actionCode == 8:
+        # px4로 서보를 작동시킬 시에는 바로 구동이 가능
+        elif actionCode == 5:
         
+       
+       
+       
+       
+       # 참고-라즈베리파이를 이용한 서보모터 제어 코딩
+        import RPi.GPIO as GPIO # 라즈베리파이 GPIO 핀을 쓰기위해 임포트
+        import time # 시간 간격으로 제어하기 위해 임포트
+        
+    def servoMotor(pin, degree, t):
+       GPIO.setmode(GPIO.BOARD) # 핀의 번호를 보드 기준으로 설정, BCM은 GPIO 번호로 호출함
+       GPIO.setup(pin, GPIO.OUT) # GPIO 통신할 핀 설정
+       pwm=GPIO.PWM(pin, 50) # 서보모터는 PWM을 이용해야됨. 16번핀을 50Hz 주기로 설정
+
+       pwm.start(3) # 초기 시작값, 반드시 입력해야됨
+       time.sleep(t) # 초기 시작값으로 이동하고 싶지 않으면 이 라인을 삭제하면 된다.
+    
+       pwm.ChangeDutyCycle(4) # 보통 2~12 사이의 값을 입력하면됨
+       time.sleep(t) # 서보모터가 이동할만큼의 충분한 시간을 입력. 너무 작은 값을 입력하면 이동하다가 멈춤
+
+       # 아래 두줄로 깨끗하게 정리해줘야 다음번 실행할때 런타임 에러가 안남
+       pwm.stop() 
+       GPIO.cleanup(pin)
+
+   servoMotor(16, 8, 1) # 신호선을 16번 핀에 연결, 8의 각도로 1초동안 실행
         
         
