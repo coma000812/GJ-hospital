@@ -258,3 +258,37 @@
     <origin xyz="0.1814 0 0.1414"/>
   </joint>
 </robot>
+
+
+
+
+continuous
+
+제한 없이 움직임
+
+  <joint name="head_swivel" type="continuous">
+    <parent link="base_link"/>
+    <child link="head"/>
+    <axis xyz="0 0 1"/>
+    <origin xyz="0 0 0.3"/>
+  </joint>
+  
+  
+  
+  
+  revolute
+  
+제한을 두고 움직임
+
+
+  <joint name="left_gripper_joint" type="revolute">
+    <axis xyz="0 0 1"/>
+    <limit effort="1000.0" lower="0.0" upper="0.548" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="0.2 0.01 0"/>
+    <parent link="gripper_pole"/>
+    <child link="left_gripper"/>
+  </joint>
+  
+  
+  
+  
