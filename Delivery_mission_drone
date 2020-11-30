@@ -17,6 +17,8 @@ from pymavlink import mavutil
 #--------------------------------------------------
 #-------------- FUNCTIONS  
 #--------------------------------------------------
+
+
 #-- Define arm and takeoff
 def arm_and_takeoff(altitude):
 
@@ -60,9 +62,9 @@ def download_mission(vehicle):
     """
     Download the current mission from the vehicle.
     """
-    cmds = vehicle.commands
-    cmds.download()
-    cmds.wait_ready() # wait until download is complete.
+    cmds = vehicle.commands #####
+    cmds.download() #####
+    cmds.wait_ready() # wait until download is complete. #####
     
 
 def get_current_mission(vehicle):
@@ -137,7 +139,7 @@ mode      = 'GROUND'
 #--------------------------------------------------    
 #-- Connect to the vehicle
 print('Connecting...')
-vehicle = connect('udp:127.0.0.1:14551')
+vehicle = connect('udp:127.0.0.1:14551') #-NameError: name 'connect' is not defined??
 #vehicle = connect('tcp:127.0.0.1:5762', wait_ready=True)
 
 
@@ -148,8 +150,8 @@ while True:
     
     if mode == 'GROUND':
         #--- Wait until a valid mission has been uploaded
-        n_WP, missionList = get_current_mission(vehicle)
-        time.sleep(2)
+        n_WP, missionList = get_current_mission(vehicle) #- AttributeError'str'object has no attribute 'commands'
+        time.sleep(2) #- NameError: name 'time' is not defined
         if n_WP > 0:
             print ("A valid mission has been uploaded: takeoff!")
             mode = 'TAKEOFF'
@@ -199,7 +201,7 @@ while True:
     
     
     
-    time.sleep(0.5)
+    time.sleep(0.5) #- NameError: name 'time' is not defined
     
     
     
