@@ -1,0 +1,12 @@
+from dronekit import connect
+ ...
+# try to connect 5 times
+while connected == False and fails < 5:
+    try:
+        vehicle = connect(connection_string, wait_ready=True)
+    except:
+        fails += 1 
+        time.sleep(3)
+        print("Failed to connect to local mavlink sleeping for 3 seconds")
+    else: 
+        connected = True
