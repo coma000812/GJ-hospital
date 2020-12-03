@@ -1,7 +1,7 @@
 while True:
     
     if mode == 'GROUND':
-        if n_WP > 0:
+    if press tap
       mmmmmmmmm  tab': lambda drone, speed: drone.takeoff(),
             print ("tap press takeoff!")
             mode = 'TAKEOFF'
