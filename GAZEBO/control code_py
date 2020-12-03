@@ -1,0 +1,44 @@
+# GJ-hospital
+
+def arm_and_takeoff (tab):
+    if press_tap:
+        print("take off")
+        arm_and_takeoff(10)
+        print("takeoff success")
+
+def arm_and_land (backspace):
+    if press_backspace:
+        print("land")
+        arm_and_land(10)
+        print("land success")
+
+def left (a):
+    if press_a:
+        print("left")
+        counter_clockwise(speed*2)
+        print("left success")
+
+def right (d):
+    if press_d:
+        print("right")
+        clockwise(speed*2)
+        print("right success")
+
+def forward (w):
+    if press_w:
+        print("forward")
+
+
+def backward (s):
+    if press_s:
+        print("backward")
+
+def up (space):
+    if press_space:
+        drone.up(speed*2)
+        print("going up")
+
+def down (shift):
+    if press_shift:
+        drone.down(speed*2)
+        print("going down")
