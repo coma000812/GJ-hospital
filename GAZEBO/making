@@ -8,8 +8,7 @@ while True:
             
     elif mode == 'TAKEOFF':
       
-        print("Home waypoint added to the mission")
-        time.sleep(1)
+        print("automatic take off")
         #-- Takeoff
         arm_and_takeoff(10)
         
@@ -19,10 +18,9 @@ while True:
         
         #-- Change mode, set the ground speed
         vehicle.groundspeed = gnd_speed
-        mode = 'MISSION'
-        print ("Swiitch mode to MISSION")
+        print ("ground speed mode")
         
-    elif mode == 'MISSION':
+    elif mode ==
         #-- Here we just monitor the mission status. Once the mission is completed we go back
         #-- vehicle.commands.cout is the total number of waypoints
         #-- vehicle.commands.next is the waypoint the vehicle is going to
