@@ -1,0 +1,50 @@
+while True:
+    
+    if mode == 'GROUND':
+        if n_WP > 0:
+      mmmmmmmmm  tab': lambda drone, speed: drone.takeoff(),
+            print ("tap press takeoff!")
+            mode = 'TAKEOFF'
+            
+    elif mode == 'TAKEOFF':
+      
+        print("Home waypoint added to the mission")
+        time.sleep(1)
+        #-- Takeoff
+        arm_and_takeoff(10)
+        
+        #-- Change the UAV mode to AUTO
+        print("Changing to AUTO")
+        ChangeMode(vehicle,"AUTO")
+        
+        #-- Change mode, set the ground speed
+        vehicle.groundspeed = gnd_speed
+        mode = 'MISSION'
+        print ("Swiitch mode to MISSION")
+        
+    elif mode == 'MISSION':
+        #-- Here we just monitor the mission status. Once the mission is completed we go back
+        #-- vehicle.commands.cout is the total number of waypoints
+        #-- vehicle.commands.next is the waypoint the vehicle is going to
+        #-- once next == cout, we just go home
+        
+        print ("Current WP: %d of %d "%(vehicle.commands.next, vehicle.commands.count))
+        if vehicle.commands.next == vehicle.commands.count:
+            print ("Final waypoint reached: go back home")
+            #-- First we clear the flight mission
+            clear_mission(vehicle)
+            print ("Mission deleted")
+            
+            #-- We go back home
+            ChangeMode(vehicle,"RTL")
+            mode = "BACK"
+            
+    elif mode == "BACK":
+        if vehicle.location.global_relative_frame.alt < 1:
+            print ("Switch to GROUND mode, waiting for new missions")
+            mode = 'GROUND'
+    
+    
+    
+    
+    time.sleep(0.5) #- NameError: name 'time' is not defined??
