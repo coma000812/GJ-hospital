@@ -1,0 +1,108 @@
+# GJ-hospital
+
+from __future__ import print_function
+
+import argparse
+
+import rospy
+import sys, select, termios, tty
+from tf.transformations import quaternion_from_euler
+from sensor_msgs.msg import Joy
+from std_msgs.msg import Header, Float64
+from geometry_msgs.msg import PoseStamped, TwistStamped, Vector3, Quaternion, Point
+from mavros.msg import OverrideRCIn
+from mavros.srv import CommandBool
+from mavros.srv import CommandTOL
+from mavros.srv import SetMode
+
+def getKey():
+    tty.setraw(sys.stdin.fileno())
+    rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
+    if rlist:
+        key = sys.stdin.read(1)
+    else:
+        key = ''
+
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+    return key
+
+
+def arm(args, state):
+    try:
+        arming_cl = rospy.ServiceProxy(args.mavros_ns + "/cmd/arming", CommandBool)
+        ret = arming_cl(value=state)
+    except rospy.ServiceException as ex:
+        fault(ex)
+
+    if not ret.success:
+        rospy.loginfo("ARM Request failed.")
+    else:
+        rospy.loginfo("ARM Request success.")
+
+def takeoff(args):
+    try:
+        takeoff_cl = rospy.ServiceProxy(args.mavros_ns + "/cmd/takeoff", CommandTOL)
+
+        ret = takeoff_cl(altitude=2, latitude=0, longitude=0, min_pitch=0, yaw=0)
+    except rospy.ServiceException as ex:
+        fault(ex)
+
+    if not ret.success:
+        rospy.loginfo("TAKEOFF Request failed.")
+    else:
+        rospy.loginfo("TAKEOFF Request success.")
+
+def set_mode(args, mode):
+    try:
+        setmode_cl = rospy.ServiceProxy(args.mavros_ns + "/set_mode", SetMode)
+
+        ret = setmode_cl(base_mode=0, custom_mode="ALT_HOLD")
+    except rospy.ServiceException as ex:
+        fault(ex)
+
+    if not ret.success:
+        rospy.loginfo("SET MODE Request failed.")
+    else:
+        rospy.loginfo("SET MODE Request success.")
+
+
+def rc_override_control(args):
+
+    rospy.init_node("mavteleop")
+    rospy.loginfo("MAV-Teleop: RC Override control type.")
+
+
+    override_pub = rospy.Publisher(args.mavros_ns + "/rc/override_joy", OverrideRCIn, queue_size=10)
+
+    throttle_ch = 1000
+
+
+    while(1):
+        roll = 1500
+	pitch = 1500
+        key = getKey()
+        #rospy.loginfo("Key: %s", key)
+        if key == 'a':
+            arm(args, True)
+        elif key == 'd':
+            arm(args, False)
+        elif key == 't':
+	    takeoff(args)
+	elif key == 'h':
+            set_mode(args, "ALT_HOLD")
+        elif key == 'r': #UP
+	    throttle_ch+=10
+	elif key == 'f': #FIX
+	    throttle_ch=1500
+	elif key == 'v': #DOWN
+	    throttle_ch-=10 
+	elif key == 'j': #LEFT
+	    roll=1600   
+	elif key == 'l': #RIGHT
+	    roll=1400   
+	elif key == 'i': #FORWARD
+	    pitch=1600 
+	elif key == 'k': #BACKWARD
+	    pitch=1400  	    
+	if (key == '\x03'):
+            break
