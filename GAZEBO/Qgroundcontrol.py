@@ -47,7 +47,7 @@ async def run():
     mission_items.append(MissionItem(47.398036222362471,
                                      8.5450146439425509,
                                      25,
-                                     10,
+                                     0,
                                      Flse,
                                      float('nan'),
                                      float('nan'),
