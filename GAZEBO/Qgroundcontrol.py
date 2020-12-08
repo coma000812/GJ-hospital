@@ -23,8 +23,8 @@ async def run():
     termination_task = asyncio.ensure_future(observe_is_in_air(drone, running_tasks))
 
     mission_items = []
-    mission_items.append(MissionItem(47.398039859999997,
-                                     8.5455725400000002,
+    mission_items.append(MissionItem(36.65989751772273,
+                                     127.50033933545205,
                                      25,
                                      10,
                                      True,
@@ -33,8 +33,8 @@ async def run():
                                      MissionItem.CameraAction.NONE,
                                      float('nan'),
                                      float('nan')))
-    mission_items.append(MissionItem(47.398036222362471,
-                                     8.5450146439425509,
+    mission_items.append(MissionItem(36.66004275404399,
+                                     127.50004429244514,
                                      25,
                                      10,
                                      True,
@@ -44,8 +44,8 @@ async def run():
                                      float('nan'),
                                      float('nan')))
     
-    mission_items.append(MissionItem(47.398036222362471,
-                                     8.5450146439425509,
+    mission_items.append(MissionItem(36.66004275404399,
+                                     127.50004429244514,
                                      25,
                                      0,
                                      Flse,
@@ -55,8 +55,8 @@ async def run():
                                      float('nan'),
                                      float('nan')))
     
-    mission_items.append(MissionItem(47.397825620791885,
-                                     8.5450092830163271,
+    mission_items.append(MissionItem(36.65987922868508,
+                                     127.49955881258825,
                                      25,
                                      10,
                                      True,
